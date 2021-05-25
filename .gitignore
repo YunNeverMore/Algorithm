@@ -1,0 +1,35 @@
+bin
+.cache
+.vscode
+**/*.sw[a-z]
+src/golang.org/
+src/google.golang.org/
+src/gopkg.in/
+src/.idea/
+dev_lic.txt
+release/
+*tmp*
+rice-box.go
+coverage/
+*.pb.cc
+*.pb.h
+libs
+*.json
+*.log
+.version
+e2e/.working_dir/*
+e2e/diff/*
+e2e/output/*
+coverage.prof
+coverage.html
+.thirdparty/
+# keep track .keep
+!**/.keep
+scripts/gcommands/gcollect
+.idea
+# python
+__pycache__
+*pytest*
+get-pip.py
+# go
+vendor
