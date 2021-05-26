@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"math"
 	"net/http"
 	"sort"
 	"strings"
@@ -340,43 +339,6 @@ func (f *FourConn) anotherPlayer(p player) player {
 		return p2
 	}
 	return p1
-}
-
-func (f *FourConn) minimax(p player, expectP player) (int, int) {
-var bestMove int
-	if p == expectP {
-		ret := math.MinInt32
-		for i := 0; i < rowNum; i++ {
-			res := f.PlaceAndCheck(p, i)
-			if res == noone {
-				res, _ = minimax(f.anotherPlayer(p), expectP)
-			}
-			f.undo()
-			if res > ret {
-				res = ret
-				bestMoves = i
-			}
-			if res == 1 {
-				return 1, move
-			}
-		}  
-	} else {
-		ret := math.MaxInt32
-		for i := 0; i < rowNum; i++ {
-			res := f.PlaceAndCheck(p, i)
-			if res == noone {
-				res, _ = minimax(f.anotherPlayer(p), expectP)
-			}
-			f.undo()
-			if res < ret {
-				res = ret
-				bestMoves = i
-			}
-			if res == -1 {
-				return 1, move
-			}
-		}  
-	}
 }
 
 func (f *FourConn) CheckWin(p player, x int, y int) player {
