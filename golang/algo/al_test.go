@@ -8,10 +8,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestHello(t *testing.T) {
+	assert := assert.New(t)
+	str := "hello"
+	assert.Equal("hello", str)
+	assert.Equal(algo.Add(3, 5), 8)
+}
+
 func TestParse1(t *testing.T) {
 	assert := assert.New(t)
 
-	assert.Equal(algo.Add(3, 5), 8)
 	res, _ := algo.ParseLang("fr-CA, fr-FR", []string{"en-US", "fr-FR"})
 	assert.Equal([]string{"fr-FR"}, res)
 
