@@ -1,6 +1,7 @@
 package algo_test
 
 import (
+	"fmt"
 	"testing"
 
 	"example.com/algo"
@@ -15,48 +16,32 @@ func TestHello(t *testing.T) {
 	assert.Equal(algo.Add(3, 5), 8)
 }
 
-func TestParse1(t *testing.T) {
+func TestParseLang(t *testing.T) {
 	assert := assert.New(t)
+	output := algo.ParseLang("en-US, fr-CA, fr-FR", []string{"fr-FR", "en-US"})
+	assert.Equal([]string{"en-US", "fr-FR"}, output)
 
-	res, _ := algo.ParseLang("fr-CA, fr-FR", []string{"en-US", "fr-FR"})
-	assert.Equal([]string{"fr-FR"}, res)
+	output = algo.ParseLang("fr-CA,    fr-FR", []string{"en-US", "fr-FR"})
+	assert.Equal([]string{"fr-FR"}, output)
 
-	res, _ = algo.ParseLang("en-US", []string{"en-US", "fr-CA"})
-	assert.Equal([]string{"en-US"}, res)
-}
+	output = algo.ParseLang("en-US", []string{"en-US", "fr-CA"})
+	assert.Equal([]string{"en-US"}, output)
 
-func TestParse2(t *testing.T) {
-	assert := assert.New(t)
+	output = algo.ParseLang("en", []string{"en-US", "fr-CA", "fr-FR"})
+	assert.Equal([]string{"en-US"}, output)
 
-	res, _ := algo.ParseLang2("en", []string{"en-US", "fr-CA", "fr-FR"})
-	assert.Equal([]string{"en-US"}, res)
+	output = algo.ParseLang("fr", []string{"en-US", "fr-CA", "fr-FR"})
+	assert.Equal([]string{"fr-CA", "fr-FR"}, output)
 
-	res, _ = algo.ParseLang2("fr", []string{"en-US", "fr-CA", "fr-FR"})
-	assert.Equal([]string{"fr-CA", "fr-FR"}, res)
+	output = algo.ParseLang("fr-FR, fr, fr-HE", []string{"en-US", "fr-CA", "fr-FR"})
+	assert.Equal([]string{"fr-FR", "fr-CA"}, output)
 
-	res, _ = algo.ParseLang2("fr-FR, fr", []string{"en-US", "fr-CA", "fr-FR"})
-	assert.Equal([]string{"fr-FR", "fr-CA"}, res)
-}
+	output = algo.ParseLang("en-US, *", []string{"en-US", "fr-CA", "fr-FR"})
+	assert.Equal([]string{"en-US", "fr-CA", "fr-FR"}, output)
 
-func TestParse3(t *testing.T) {
-	assert := assert.New(t)
+	output = algo.ParseLang("fr-FR, fr, *", []string{"en-US", "fr-CA", "fr-FR"})
+	assert.Equal([]string{"fr-FR", "fr-CA", "en-US"}, output)
 
-	res, _ := algo.ParseLang3("en-US, *", []string{"en-US", "fr-CA", "fr-FR"})
-	assert.Equal([]string{"en-US", "fr-CA", "fr-FR"}, res)
+	fmt.Println("test finished")
 
-	res, _ = algo.ParseLang3("fr-FR, fr, *", []string{"en-US", "fr-CA", "fr-FR"})
-	assert.Equal([]string{"fr-FR", "fr-CA", "en-US"}, res)
-}
-
-func TestParse4(t *testing.T) {
-	assert := assert.New(t)
-
-	res, _ := algo.ParseLang4("fr-FR;q=1, fr-CA;q=0, fr;q=0.5", []string{"fr-FR", "fr-CA", "fr-BG"})
-	assert.Equal([]string{"fr-FR", "fr-BG", "fr-CA"}, res)
-
-	res, _ = algo.ParseLang4("fr-FR;q=1, fr-CA;q=0, *;q=0.5", []string{"fr-FR", "fr-CA", "fr-BG", "en-US"})
-	assert.Equal([]string{"fr-FR", "fr-BG", "en-US", "fr-CA"}, res)
-
-	res, _ = algo.ParseLang4("fr-FR;q=1, fr-CA;q=0.8, *;q=0.5", []string{"fr-FR", "fr-CA", "fr-BG", "en-US"})
-	assert.Equal([]string{"fr-FR", "fr-CA", "fr-BG", "en-US"}, res)
 }
